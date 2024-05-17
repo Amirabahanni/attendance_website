@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Spartan&display=swap" rel="stylesheet">
+    <title>Student Form</title>
+    <style>
+        *{
+            font-family: 'Spartan', sans-serif;
+        }
+        body {
+            background: radial-gradient(circle, rgb(12, 57, 239) 0%, rgb(252, 17, 181) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1{
+            color:aliceblue;
+            margin-left: -10%;
+            font-size: 40px;
+        }
+        form {
+            width: 360px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 35px 35px 100px rgba(238, 238, 228, 0.667), 35px 35px 100px rgba(23, 23, 22, 0.288);
+        }
+
+        input[type="submit"], input[type="text"] {
+            width: 100%;
+            padding: 14px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #b0b2db;
+            background: #e0f0fc;
+            border-radius: 9px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #ff9ae1c0;
+            color: white;
+            cursor: pointer;
+        }
+        a{
+            color: #8fcffc;
+        }
+    </style>
+</head>
+<body>
+    <h1> web<br>developpement&nbsp;&nbsp;&nbsp;</h1>
+    <form id="studentform" action="script.php" method="POST">
+        <label for="fname">F i r s t &nbsp;&nbsp; N a m e :</label><br>
+        <input type="text" id="fname" name="fname"><br>
+        <label for="lname">L a s t &nbsp;&nbsp; N a m e :</label><br>
+        <input type="text" id="lname" name="lname"><br><br>
+        <input type="submit" id="submitBtn" value="Submit" onclick="getLocation(event)">
+        <p><a href="attendance_list.php">Click here if you want the attendance list</a></p>
+    </form> 
+
+    <script>
+        var classroomLat = 31.448762944177197; 
+        var classroomLon = -9.732135612979809; 
+        function getLocation(event) {
+    event.preventDefault();
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(checkDistance);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function checkDistance(position) {
+    var studentLat = position.coords.latitude;
+    var studentLon = position.coords.longitude;
+    var distance = Math.sqrt(Math.pow((studentLat - classroomLat), 2) + Math.pow((studentLon - classroomLon), 2));
+    if (distance <=  0.000315) { 
+        alert("You are in the classroom.");
+        document.getElementById('studentform').submit();
+    } else {
+        alert("You are not in the classroom.");
+    }
+}
+    </script>
+</body>
+</html>
